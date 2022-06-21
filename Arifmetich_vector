@@ -1,0 +1,78 @@
+#include <iostream>
+using namespace std;
+
+class ArifmVec
+{
+protected:
+    int* ptr;
+    int len;
+    int capacity;
+public:
+    ArifmVec()
+    {
+        ptr = new int[3];
+        for (int i = 0; i < 3; i++) {ptr[i] = 0; }
+        len = 3;
+    }
+    ArifmVec(const int* p, int count)
+    {
+        len = count;
+        ptr = new int[len];
+        for (int i = 0; i < len; i++)
+        {
+            ptr[i] = p[i];
+        }
+    }
+
+    ArifmVec& operator+(ArifmVec& m)
+    {
+        ArifmVec res;
+        for (int i = 0; i < len; i++)
+        {
+            res.ptr[i] = ptr[i] + m.ptr[i];
+        }
+        return res;
+    }
+    ArifmVec& operator+(int a)
+    {
+        ArifmVec res;
+        for (int i = 1; i < len; i++)
+        {
+            res.ptr[i] = ptr[i];
+        }
+        res.ptr[0] = ptr[0] + a;
+        return res;
+    }
+    void print()
+    {
+        for (int i = 0; i < len; i++)
+        {
+            cout << ptr[i] << " ";
+        }
+        cout << endl;
+    }
+};
+
+int main()
+{
+    int vec[3];
+    for (int i = 0; i < 3; i++)
+    {
+        vec[i] = i * 2 + 1;
+    }
+    ArifmVec a(vec, 3);
+    a.print();
+    ArifmVec b;
+    b = a + 3;
+    b.print();
+
+    int vec2[3];
+    for (int i = 0; i < 3; i++)
+    {
+        vec2[i] = i * 3 + 1;
+    }
+    ArifmVec c(vec2, 3);
+    c.print();
+    b = a + c;
+    b.print();
+}
