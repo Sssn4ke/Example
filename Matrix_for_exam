@@ -1,0 +1,109 @@
+#include <iostream>
+using namespace std;
+
+class Matrix
+{
+protected:
+    double** ptr;
+    int hight;
+    int weight;
+public:
+    Matrix()
+    {
+        hight = 2; weight = 2;
+        ptr = new double* [hight];
+        for (int i = 0; i < hight; i++)
+        {
+            ptr[i] = new double[weight];
+        }
+        for (int i = 0; i < hight; i++)
+        {
+            for (int j = 0; j < weight; j++)
+            {
+                ptr[i][j] = i * 2 + j + 1;
+            }
+        }
+    }
+    Matrix(const Matrix& M)
+    {
+        hight = M.hight; weight = M.weight;
+        ptr = new double* [hight];
+        for (int i = 0; i < hight; i++)
+        {
+            ptr[i] = new double[weight];
+        }
+        for (int i = 0; i < hight; i++)
+        {
+            for (int j = 0; j < weight; j++)
+            {
+                ptr[i][j] = M.ptr[i][j];
+            }
+        }
+    }
+//транспонирование
+    Matrix operator!()
+    {
+        Matrix Res;
+        for (int i = 0; i < hight; i++)
+        {
+            for (int j = 0; j < weight; j++)
+            {
+                Res.ptr[j][i] = ptr[i][j];
+            }
+        }
+        return Res;
+    }
+
+    Matrix operator+(Matrix& M)
+    {
+        Matrix Res;
+        for (int i = 0; i < hight; i++)
+        {
+            for (int j = 0; j < weight; j++)
+            {
+                Res.ptr[i][j] = ptr[i][j] + M.ptr[i][j];
+            }
+        }
+        return Res;
+    }
+
+    Matrix operator+(int a)
+    {
+        Matrix Res;
+        for (int i = 0; i < hight; i++)
+        {
+            for (int j = 0; j < weight; j++)
+            {
+                Res.ptr[i][j] = ptr[i][j] + a;
+            }
+        }
+        return Res;
+    }
+    void print()
+    {
+        for (int i = 0; i < hight; i++)
+        {
+            for (int j = 0; j < weight; j++)
+                cout << ptr[i][j] << " ";
+            cout << "\n";
+        }
+    }
+};
+
+int main()
+{
+    Matrix g;
+    g.print();
+    cout << endl;
+    Matrix f;
+    f = !g;
+    f.print();
+    cout << endl;
+    Matrix d;
+    Matrix s;
+    d = g + 4;
+    d.print();
+    cout << endl;
+    s = g + d;
+    s.print();
+}
